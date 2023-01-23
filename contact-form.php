@@ -57,6 +57,11 @@ $isValid = $isPosted && (
             Valider
         </button>
     </form>
+    <?php else: ?>
+    <h3>Bravo</h3>
+    <pre>
+            <?php var_dump($_POST) ?>
+        </pre>
     <?php endif ?>
 </body>
 
