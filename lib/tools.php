@@ -18,3 +18,14 @@ function getCombo(array $data, string $name, string $val = ""): string{
 
     return $html;
 }
+
+function getArrayFromFile($fileName){
+    if(! file_exists($fileName)){
+        return [];
+    }
+
+    $content = file_get_contents($fileName);
+    $data = explode("\n", $content);
+
+    return $data;
+}

@@ -1,10 +1,7 @@
 <?php
 include "lib/tools.php";
 
-$listOfCharClasses = [
-    "Paladin", "Magicien", "Barbare", "Spadassin", "Sorcier",
-    "Voleur", "Escrimeur"
-];
+$listOfCharClasses = getArrayFromFile("class-list.txt");
 
 $traitsList = [
     "Alerte", "Sympathique", "Malicieux", "trop balaize", "Plein de thunes"
