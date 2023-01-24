@@ -1,5 +1,9 @@
 <?php
 
+$traitsList = [
+    "Alerte", "Sympathique", "Malicieux", "trop balaize", "Plein de thunes"
+];
+
 $isPosted = filter_has_var(INPUT_POST, 'submit');
 $data = [];
 
@@ -133,26 +137,15 @@ if($isPosted){
             <div class="qualities">
                 <h4>Qualités</h4>
 
+                <?php foreach($traitsList as $quality): ?>
                 <div class="form-grid">
-                    <input type="checkbox" name="qualites[]" value="Altruiste"
-                        <?= isset($data["qualites"]) && in_array("Altruiste", $data["qualites"])? "checked": ""  ?>>
-                    <label>Altruiste</label>
+                    <input type="checkbox" name="qualites[]" value="<?=$quality?>"
+                        <?= isset($data["qualites"]) && in_array($quality, $data["qualites"])? "checked": ""  ?>>
+                    <label><?=$quality?></label>
                 </div>
-                <div class="form-grid">
-                    <input type="checkbox" name="qualites[]" value="Rusé"
-                        <?= isset($data["qualites"]) && in_array("Rusé", $data["qualites"])? "checked": ""  ?>>
-                    <label>Rusé</label>
-                </div>
-                <div class="form-grid">
-                    <input type="checkbox" name="qualites[]" value="Débrouillard"
-                        <?= isset($data["qualites"]) && in_array("Débrouillard", $data["qualites"])? "checked": ""  ?>>
-                    <label>Débrouillard</label>
-                </div>
-                <div class="form-grid">
-                    <input type="checkbox" name="qualites[]" value="Riche"
-                        <?= isset($data["qualites"]) && in_array("Riche", $data["qualites"])? "checked": ""  ?>>
-                    <label>Riche</label>
-                </div>
+                <?php endforeach; ?>
+
+
             </div>
 
             <div>
