@@ -1,3 +1,39 @@
+<?php
+
+$isPosted = filter_has_var(INPUT_POST, 'submit');
+$data = [];
+
+if($isPosted){
+    $data["nom"] = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
+    $data["description"] = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+
+    $data["force"] = filter_input(INPUT_POST, 'force', FILTER_VALIDATE_INT);
+    $data["endurance"] = filter_input(INPUT_POST, 'endurance', FILTER_VALIDATE_INT);
+    $data["agilite"] = filter_input(INPUT_POST, 'agilite', FILTER_VALIDATE_INT);
+
+    $data["intelligence"] = filter_input(INPUT_POST, 'intelligence', FILTER_VALIDATE_INT);
+    $data["sagesse"] = filter_input(INPUT_POST, 'sagesse', FILTER_VALIDATE_INT);
+    $data["charisme"] = filter_input(INPUT_POST, 'charisme', FILTER_VALIDATE_INT);
+
+    $data["qualites"] = filter_input(INPUT_POST, 'qualites', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) ?? [];
+
+    $isValid =  strlen($data["nom"]) > 3
+                && ! empty($data["force"])
+                && $data["force"] > 0
+                && ! empty($data["endurance"])
+                && $data["endurance"] > 0
+                && ! empty($data["agilite"])
+                && $data["agilite"] > 0
+                && ! empty($data["intelligence"])
+                && $data["intelligence"] > 0
+                && ! empty($data["sagesse"])
+                && $data["sagesse"] > 0
+                && ! empty($data["charisme"])
+                && $data["charisme"] > 0;
+}
+
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -50,39 +86,45 @@
 </head>
 
 <body>
-    <form>
+    <form method="post">
         <div class="form-grid-2-third">
             <label>Nom</label>
-            <input type="text" name="nom">
+            <input type="text" name="nom" value="<?=isset($data["nom"])? $data["nom"]: "" ?>">
         </div>
 
         <div class="form-grid">
             <div>
                 <div class="form-grid">
                     <label>Force</label>
-                    <input type="number" min="1" max="10" name="force">
+                    <input type="number" min="1" max="10" name="force"
+                        value="<?= isset($data["force"])? $data["force"]: "" ?>">
                 </div>
                 <div class="form-grid">
                     <label>Endurance</label>
-                    <input type="number" min="1" max="10" name="endurance">
+                    <input type="number" min="1" max="10" name="endurance"
+                        value="<?= isset($data["endurance"])? $data["endurance"]: "" ?>">
                 </div>
                 <div class="form-grid">
                     <label>Agilité</label>
-                    <input type="number" min="1" max="10" name="agilite">
+                    <input type="number" min="1" max="10" name="agilite"
+                        value="<?= isset($data["agilite"])? $data["agilite"]: "" ?>">
                 </div>
             </div>
             <div>
                 <div class="form-grid">
                     <label>Intelligence</label>
-                    <input type="number" min="1" max="10" name="intelligence">
+                    <input type="number" min="1" max="10" name="intelligence"
+                        value="<?= isset($data["intelligence"])? $data["intelligence"]: "" ?>">
                 </div>
                 <div class="form-grid">
                     <label>Sagesse</label>
-                    <input type="number" min="1" max="10" name="sagesse">
+                    <input type="number" min="1" max="10" name="sagesse"
+                        value="<?= isset($data["sagesse"])? $data["sagesse"]: "" ?>">
                 </div>
                 <div class="form-grid">
                     <label>Charisme</label>
-                    <input type="number" min="1" max="10" name="charisme">
+                    <input type="number" min="1" max="10" name="charisme"
+                        value="<?= isset($data["charisme"])? $data["charisme"]: "" ?>">
                 </div>
             </div>
         </div>
@@ -92,19 +134,23 @@
                 <h4>Qualités</h4>
 
                 <div class="form-grid">
-                    <input type="checkbox" name="qualities[]" value="Altruiste">
+                    <input type="checkbox" name="qualites[]" value="Altruiste"
+                        <?= isset($data["qualites"]) && in_array("Altruiste", $data["qualites"])? "checked": ""  ?>>
                     <label>Altruiste</label>
                 </div>
                 <div class="form-grid">
-                    <input type="checkbox" name="qualities[]" value="Rusé">
+                    <input type="checkbox" name="qualites[]" value="Rusé"
+                        <?= isset($data["qualites"]) && in_array("Rusé", $data["qualites"])? "checked": ""  ?>>
                     <label>Rusé</label>
                 </div>
                 <div class="form-grid">
-                    <input type="checkbox" name="qualities[]" value="Débrouillard">
+                    <input type="checkbox" name="qualites[]" value="Débrouillard"
+                        <?= isset($data["qualites"]) && in_array("Débrouillard", $data["qualites"])? "checked": ""  ?>>
                     <label>Débrouillard</label>
                 </div>
                 <div class="form-grid">
-                    <input type="checkbox" name="qualities[]" value="Riche">
+                    <input type="checkbox" name="qualites[]" value="Riche"
+                        <?= isset($data["qualites"]) && in_array("Riche", $data["qualites"])? "checked": ""  ?>>
                     <label>Riche</label>
                 </div>
             </div>
