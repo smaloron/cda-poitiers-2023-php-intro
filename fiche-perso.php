@@ -1,4 +1,10 @@
 <?php
+include "lib/tools.php";
+
+$listOfCharClasses = [
+    "Paladin", "Magicien", "Barbare", "Spadassin", "Sorcier",
+    "Voleur", "Escrimeur"
+];
 
 $traitsList = [
     "Alerte", "Sympathique", "Malicieux", "trop balaize", "Plein de thunes"
@@ -11,6 +17,8 @@ if($isPosted){
     $data["nom"] = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
     $data["description"] = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
 
+    $data["class"] = filter_input(INPUT_POST, 'charClass', FILTER_SANITIZE_STRING);
+
     $data["force"] = filter_input(INPUT_POST, 'force', FILTER_VALIDATE_INT);
     $data["endurance"] = filter_input(INPUT_POST, 'endurance', FILTER_VALIDATE_INT);
     $data["agilite"] = filter_input(INPUT_POST, 'agilite', FILTER_VALIDATE_INT);
@@ -22,18 +30,12 @@ if($isPosted){
     $data["qualites"] = filter_input(INPUT_POST, 'qualites', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) ?? [];
 
     $isValid =  strlen($data["nom"]) > 3
-                && ! empty($data["force"])
-                && $data["force"] > 0
-                && ! empty($data["endurance"])
-                && $data["endurance"] > 0
-                && ! empty($data["agilite"])
-                && $data["agilite"] > 0
-                && ! empty($data["intelligence"])
-                && $data["intelligence"] > 0
-                && ! empty($data["sagesse"])
-                && $data["sagesse"] > 0
-                && ! empty($data["charisme"])
-                && $data["charisme"] > 0;
+                && validateCharacteristic($data, "force")
+                && validateCharacteristic($data, "endurance")
+                && validateCharacteristic($data, "agilite")
+                && validateCharacteristic($data, "intelligence")
+                && validateCharacteristic($data, "sagesse")
+                && validateCharacteristic($data, "charisme");
 }
 
 ?>
@@ -91,9 +93,15 @@ if($isPosted){
 
 <body>
     <form method="post">
-        <div class="form-grid-2-third">
-            <label>Nom</label>
-            <input type="text" name="nom" value="<?=isset($data["nom"])? $data["nom"]: "" ?>">
+        <div class="form-grid">
+            <div class="form-grid">
+                <label>Nom</label>
+                <input type="text" name="nom" value="<?=isset($data["nom"])? $data["nom"]: "" ?>">
+            </div>
+            <div class="form-grid">
+                <label>Classe</label>
+                <?= getCombo($listOfCharClasses, "charClass", $data["class"]?? "") ?>
+            </div>
         </div>
 
         <div class="form-grid">
