@@ -5,7 +5,3 @@ Plombier
 Pompier
 Pasteur
  Boulanger
- Boucher
- Boucher
- aaa
- bbb

@@ -25,12 +25,16 @@
         <thead>
             <tr>
                 <th>Profession</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach($data as $item): ?>
             <tr>
                 <td><?=$item?></td>
+                <td>
+                    <a href="suppression-profession.php?prof=<?=$item ?>">Supprimer</a>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

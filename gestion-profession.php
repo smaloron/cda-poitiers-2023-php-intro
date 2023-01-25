@@ -8,7 +8,9 @@ $isPosted = filter_has_var(INPUT_POST, "submit");
 if($isPosted){
     $prof = filter_input(INPUT_POST, "profession", FILTER_SANITIZE_STRING);
 
-    if(! empty($prof)){
+    $prof = trim($prof);
+
+    if(! empty($prof) && ! in_array($prof, $data)){
         file_put_contents("class-list.txt", "\n $prof", FILE_APPEND | LOCK_EX);
 
         header("location:gestion-profession.php");
