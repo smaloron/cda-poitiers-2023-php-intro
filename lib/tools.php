@@ -29,3 +29,9 @@ function getArrayFromFile($fileName){
 
     return $data;
 }
+
+function varDump($var){
+    echo "<pre>";
+    var_dump($var);
+    echo "</pre>";
+}
