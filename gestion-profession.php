@@ -12,6 +12,7 @@ if($isPosted){
         file_put_contents("class-list.txt", "\n $prof", FILE_APPEND | LOCK_EX);
 
         header("location:gestion-profession.php");
+        
     }
 }
 
