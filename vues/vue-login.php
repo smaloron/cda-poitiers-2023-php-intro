@@ -5,31 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="/node_modules/sakura.css/css/sakura-dark.css">
-
+    <title>Login</title>
+    <link rel="stylesheet" href="node_modules/sakura.css/css/sakura-dark.css">
 </head>
 
 <body>
 
     <?php include "fragments/show-errors.php"; ?>
 
+    <p><?=$message?></p>
+
     <form method="post">
-        <h3>Inscription</h3>
-        <label>Nom</label>
-        <input type="text" name="userName">
         <label>Identifiant</label>
         <input type="text" name="login">
         <label>Mot de passe</label>
-        <input type="password" name="pass">
+        <input type="password" name="password">
         <div>
             <button name="submit" type="submit">
-                Valider</button>
+                Valider
+            </button>
         </div>
-
     </form>
-
-
 
 </body>
 

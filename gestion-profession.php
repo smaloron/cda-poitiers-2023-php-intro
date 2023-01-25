@@ -1,4 +1,5 @@
 <?php
+include "lib/authenticate.php";
 include "lib/tools.php";
 
 $data = getArrayFromFile('class-list.txt');

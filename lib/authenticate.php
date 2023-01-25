@@ -1,4 +1,17 @@
 <?php
+session_start();
+
+$publicRoutes = [
+    "/login.php",
+    "/register.php"
+];
+
+// Vérification de l'authetification
+if(! isset($_SESSION["userName"]) && 
+! in_array($_SERVER["SCRIPT_NAME"], $publicRoutes)){
+    $_SESSION["message"] = "Vous devez être authentifié";
+    header("location:login.php");
+}
 
 // Chemin vers la liste des utilisateurs 
 define("USER_PATH", "data/users.json");
@@ -63,4 +76,43 @@ function register(array $user): bool{
     $res = file_put_contents(USER_PATH, $content);
 
     return $res !== false;
+}
+
+/**
+ * Trouve un utilisateur en fonction de son login
+ * @author Sébastien Maloron
+ * @param $login l'identifiant
+ * @return array tableau représentant un utilisateur
+ */
+function findUserByLogin(string $login): array{
+    $userList = getUsers();
+    $users =  array_filter($userList, function($item) use ($login){
+        return $item["login"] === $login;
+    });
+    return $users[0] ?? [];
+}
+
+/**
+ * Authentification d'un utilisateur
+ * @author Sébastien Maloron
+ * @param $login l'identifiant
+ * @param $password le mot de passe 
+ * @return booléen indiquant si l'utilisateur est authentifié ou non
+ */
+function authenticate(string $login, string $password): bool {
+    // chercher un utilisateur possédant le login passé en argument
+    $user = findUserByLogin($login);
+    $userFound = count($user)>0;
+    // vérifier que le mot de passe de cet utilisateur correspond à celui passé en argument
+    if($userFound){
+        var_dump($user);
+        // vérification du mot de passe en clair comparé au mot de passe hashé contenu dans l'utilisateur
+        $authenticated =  password_verify($password, $user["password"]);
+        if($authenticated){
+            $_SESSION["userName"] = $user["userName"];
+            return $authenticated;
+        }
+    }
+
+    return false;
 }
