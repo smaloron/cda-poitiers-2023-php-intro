@@ -39,16 +39,13 @@ $path = $_SERVER["REQUEST_URI"];
 </head>
 
 <body>
-    <h1>
-        Liste des fichiers et dossiers de :
-        <?= empty($path)? "racine": $path ?>
-    </h1>
+    <h1>Liste des fichiers et dossiers de : <?= empty($path)? "racine": $path ?></h1>
 
     <ul class="folder-list">
         <?php foreach($content as $item): ?>
         <?php if(! in_array($item, [".", ".."])): ?>
         <li>
-            <a href="<?=$item?>" class="<?= is_file($item)? 'file':'folder' ?>">
+            <a href="<?="$path/".$item?>" class="<?= is_file($item)? 'file':'folder' ?>">
                 <?=$item?>
             </a>
         </li>
