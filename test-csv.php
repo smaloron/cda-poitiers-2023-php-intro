@@ -1,9 +1,10 @@
 <?php
+include "lib/tools.php";
 
 // Lecture du fichier csv
 $content = file("data/employes.csv");
 
-var_dump($content);
+
 
 $data = array_map(
     function($item){
@@ -13,8 +14,7 @@ $data = array_map(
 );
 
 $fieldNames = str_getcsv($content[0], ";");
-var_dump($content[0]);
-var_dump($fieldNames);
+
 $data2 = array_map(
     function($item) use ($fieldNames){
         return array_combine($fieldNames, str_getcsv($item,";")) ;
@@ -26,7 +26,10 @@ array_shift($data2);
 
 
 
-var_dump($data2);
+var_dump(
+    parseCsvFile("data/employes.csv")
+);
 
-
-// parseCsvFile($fieldName, $separator = ";", enclosure= '"')
+var_dump(
+    parseCsvFile("data/perso.csv", ",")
+);
